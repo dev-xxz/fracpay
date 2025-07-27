@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thank You</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    /* Reset */
+    body, html {
+      margin: 0; padding: 0; height: 100%;
+      background: black;
+      color: #0f0;
+      font-family: 'Share Tech Mono', monospace;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      flex-direction: column;
+    }
+
+    /* Matrix Canvas */
+    #matrix {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.15;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 480px;
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid #00ff00;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow:
+        0 0 10px #00ff00,
+        0 0 20px #00ff00,
+        0 0 40px #00ff00,
+        0 0 80px #00ff00;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #00ff00;
+      animation: flicker 2s infinite alternate;
+      text-shadow:
+        0 0 10px #00ff00,
+        0 0 20px #00ff00,
+        0 0 40px #00ff00;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      line-height: 1.5;
+      color: #0f0;
+      text-shadow: 0 0 5px #0f0;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: black;
+      background-color: #0f0;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 0 10px #0f0;
+      transition: background-color 0.3s ease;
+    }
+    .btn:hover {
+      background-color: #0c0;
+      box-shadow: 0 0 20px #0c0;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.85rem;
+      color: #004d00;
+      text-shadow: none;
+    }
+
+    /* Flicker Animation */
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+        text-shadow:
+          0 0 10px #00ff00,
+          0 0 20px #00ff00,
+          0 0 40px #00ff00;
+      }
+      20%, 22%, 24%, 55% {
+        opacity: 0.4;
+        text-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+
+  <div class="container">
+    <h1>Thank You for Your Purchase!</h1>
+    <p>Your order with FRACTURE has been successfully processed.</p>
+    <p>Please check your email for your product files and additional information.</p>
+    <a href="https://store.fracturesoftware.com" class="btn">Browse More Products</a>
+  </div>
+  <footer>
+    &copy; 2025 FRACTURE — Premium Cheat Software
+  </footer>
+
+  <script>
+    // MATRIX CODE RAIN EFFECT
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()-_=+[]{}|;:,.<>?/\\";
+    const fontSize = 16;
+    const columns = Math.floor(width / fontSize);
+
+    // An array of y positions for each column
+    const drops = Array(columns).fill(0);
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.fillStyle = "#0f0";
+      ctx.font = fontSize + "px 'Share Tech Mono', monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 50);
+
+    // Resize canvas on window resize
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+    <script>
+  // List of allowed referring URLs
+  const allowedReferrers = [
+    'https://fracture.sellhub.cx',
+    'https://store.fracturesoftware.site',
+    'https://sellhub.cx'
+  ];
+
+  // Check if referrer starts with any allowed referrer
+  const isAllowed = allowedReferrers.some(ref => document.referrer.startsWith(ref));
+
+  if (!isAllowed) {
+    // Redirect if referrer is not allowed or empty
+    window.location.href = 'https://store.fracturesoftware.site'; // Redirect to homepage or any other page
+  }
+</script>
+  </script>
+</body>
+</html>
