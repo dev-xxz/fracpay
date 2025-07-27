@@ -1,244 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Thank You - FRACTURE</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Thank You</title>
 
-    body, html {
-      margin: 0; padding: 0; height: 100%;
-      background: #1a001a;
-      color: #ff66cc;
-      font-family: 'Orbitron', sans-serif;
-      overflow: hidden;
-    }
+<!-- Favicon -->
+<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
 
-    #content {
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    background: #0b0012;
+    color: #ff33cc;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Background image with blur and dark overlay */
+  #background {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: url('https://cdn.discordapp.com/attachments/1387223435297685524/1398849878591012954/5c35fbfbd72b943fc46af6f1e0fe9fd8.jpg') center center/cover no-repeat;
+    filter: blur(14px) brightness(0.35);
+    z-index: -1;
+    opacity: 0;
+    animation: bgFadeIn 1.8s ease forwards;
+  }
+
+  @keyframes bgFadeIn {
+    to { opacity: 1; }
+  }
+
+  #container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Spinner */
+  .spinner {
+    border: 8px solid #33003344;
+    border-top: 8px solid #ff33cc;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    animation: spin 1.2s linear infinite;
+    margin-bottom: 30px;
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.5s ease;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+  }
+
+  /* Checkmark SVG */
+  #checkmark {
+    width: 100px;
+    height: 100px;
+    stroke: #ff33cc;
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    opacity: 0;
+    margin-bottom: 30px;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+
+  /* Bounce animation for checkmark */
+  @keyframes bounceIn {
+    0% {
       opacity: 0;
-      transition: opacity 1s ease-in-out;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-      max-width: 480px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 20;
+      transform: scale(0.5) translateY(40px);
     }
-
-    .glitch {
-      position: relative;
-      font-size: 3rem;
-      margin-bottom: 20px;
-      color: #ff66cc;
-      letter-spacing: 2px;
-      animation: glitch-anim 2s infinite;
-    }
-    .glitch::before,
-    .glitch::after {
-      content: attr(data-text);
-      position: absolute;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      opacity: 0.8;
-      clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-    }
-    .glitch::before {
-      left: 2px;
-      text-shadow: -2px 0 #ff0099;
-      animation: glitch-anim-before 2s infinite;
-    }
-    .glitch::after {
-      left: -2px;
-      text-shadow: -2px 0 #ff66cc;
-      animation: glitch-anim-after 2s infinite;
-      clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-    }
-
-    @keyframes glitch-anim {
-      0%, 100% {transform: translate(0);}
-      20% {transform: translate(-2px, 2px);}
-      40% {transform: translate(2px, -2px);}
-      60% {transform: translate(-2px, -2px);}
-      80% {transform: translate(2px, 2px);}
-    }
-    @keyframes glitch-anim-before {
-      0%, 100% {clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);}
-      50% {clip-path: polygon(0 10%, 100% 10%, 100% 30%, 0 30%);}
-    }
-    @keyframes glitch-anim-after {
-      0%, 100% {clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);}
-      50% {clip-path: polygon(0 65%, 100% 65%, 100% 85%, 0 85%);}
-    }
-
-    .scanlines {
-      pointer-events: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background:
-        repeating-linear-gradient(
-          0deg,
-          rgba(255, 102, 204, 0.04),
-          rgba(255, 102, 204, 0.04) 1px,
-          transparent 1px,
-          transparent 3px
-        );
-      z-index: 10;
-      animation: scanline-move 10s linear infinite;
-    }
-    @keyframes scanline-move {
-      0% { background-position: 0 0; }
-      100% { background-position: 0 100%; }
-    }
-
-    .container {
-      position: relative;
-      z-index: 20;
-      max-width: 480px;
-      background: #330033cc;
-      border: 2px solid #ff33cc;
-      padding: 40px 30px;
-      border-radius: 12px;
-      box-shadow:
-        0 0 15px #ff33cc,
-        0 0 30px #ff33ccaa;
-      margin: 0 auto;
-    }
-
-    p {
-      font-size: 1.1rem;
-      margin-bottom: 30px;
-      line-height: 1.5;
-      color: #ff99dd;
-      text-shadow: 0 0 6px #ff66cc;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 14px 28px;
-      font-size: 1rem;
-      font-weight: 700;
-      color: #330033;
-      background-color: #ff66cc;
-      border: none;
-      border-radius: 8px;
-      text-decoration: none;
-      cursor: pointer;
-      box-shadow: 0 0 15px #ff66cc;
-      transition: background-color 0.3s ease;
-    }
-    .btn:hover {
-      background-color: #ff33cc;
-      box-shadow: 0 0 30px #ff33cc;
-    }
-
-    footer {
-      margin-top: 40px;
-      font-size: 0.85rem;
-      color: #990066cc;
-      text-shadow: none;
-      position: relative;
-      z-index: 20;
-    }
-
-    #confirm-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: #000000cc;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      color: #00ff66;
-      text-shadow:
-        0 0 10px #00ff66,
-        0 0 30px #00ff66,
-        0 0 60px #00ff66;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 3rem;
-      animation: pulseGlow 2.5s ease-in-out forwards;
+    60% {
       opacity: 1;
-      transition: opacity 1s ease;
+      transform: scale(1.1) translateY(-10px);
     }
+    80% {
+      transform: scale(0.95) translateY(5px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
 
-    #confirm-overlay svg {
-      width: 100px;
-      height: 100px;
-      margin-bottom: 20px;
-      stroke: #00ff66;
-      stroke-width: 5;
-      fill: none;
-      filter:
-        drop-shadow(0 0 8px #00ff66)
-        drop-shadow(0 0 15px #00ff66);
-      animation: pulseGlow 2.5s ease-in-out forwards;
-    }
+  #thankyou {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  #thankyou.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #thankyou h1 {
+    margin: 0 0 15px;
+    font-size: 2rem;
+  }
+  #thankyou button {
+    background: #ff33cc;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 0 15px #ff33ccaa;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  #thankyou button:hover {
+    background: #ff66ff;
+    box-shadow: 0 0 25px #ff66ffdd;
+  }
+</style>
 
-    @keyframes pulseGlow {
-      0%, 100% {
-        filter:
-          drop-shadow(0 0 8px #00ff66)
-          drop-shadow(0 0 15px #00ff66);
-        opacity: 1;
-        transform: scale(1);
-      }
-      50% {
-        filter:
-          drop-shadow(0 0 15px #00ff66)
-          drop-shadow(0 0 30px #00ff66);
-        opacity: 1;
-        transform: scale(1.1);
-      }
-    }
-  </style>
 </head>
 <body>
-  <div id="confirm-overlay" aria-live="polite" aria-label="Purchase Confirmed">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-    Confirmed
+
+<!-- Referrer check script -->
+<script>
+  (function() {
+    const allowedReferrers = [
+      'https://store.fracturesoftware.site',
+      'https://sellhub.cx',
+      'https://fracture.sellhub.cx'
+    ];
+
+    const referrer = document.referrer;
+
+    if (!referrer) {
+      window.location.href = 'https://store.fracturesoftware.site';
+      return;
+    }
+
+    let referrerOrigin;
+    try {
+      referrerOrigin = new URL(referrer).origin;
+    } catch(e) {
+      window.location.href = 'https://store.fracturesoftware.site';
+      return;
+    }
+
+    if (!allowedReferrers.includes(referrerOrigin)) {
+      window.location.href = 'https://store.fracturesoftware.site';
+    }
+  })();
+</script>
+
+<div id="background" aria-hidden="true"></div>
+
+<div id="container" role="main" aria-busy="true" aria-live="polite">
+
+  <div class="spinner" id="spinner" aria-label="Loading animation" role="img" aria-busy="true"></div>
+
+  <svg id="checkmark" viewBox="0 0 52 52" aria-hidden="true" role="img" aria-label="Success checkmark">
+    <path d="M14 27l10 10 14-22"/>
+  </svg>
+
+  <div id="thankyou" aria-live="polite" aria-hidden="true">
+    <h1>Thank You for Your Order</h1>
+    <button id="discordBtn" aria-label="Join Discord for support">Join Discord for Support</button>
   </div>
 
-  <div class="scanlines"></div>
+</div>
 
-  <div id="content" class="container" role="main" aria-label="Thank You Content" aria-hidden="true">
-    <h1 class="glitch" data-text="Thank You for Your Purchase!">Thank You for Your Purchase!</h1>
-    <p>Your order with FRACTURE has been successfully processed.</p>
-    <p>Please check your email for download instructions and support information.</p>
-    <a href="/products" class="btn">Browse More Products</a>
-  </div>
+<script>
+  const spinner = document.getElementById('spinner');
+  const checkmark = document.getElementById('checkmark');
+  const checkmarkPath = checkmark.querySelector('path');
+  const thankyou = document.getElementById('thankyou');
+  const discordBtn = document.getElementById('discordBtn');
+  const container = document.getElementById('container');
 
-  <footer aria-hidden="true">
-    &copy; 2025 FRACTURE — Premium Cheat Software
-  </footer>
+  discordBtn.onclick = () => {
+    window.open('https://discord.gg/frac', '_blank');
+  };
 
-  <script>
-    (function() {
-      const overlay = document.getElementById('confirm-overlay');
-      const content = document.getElementById('content');
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
-      content.setAttribute('aria-hidden', 'true');
+  async function showCheckmark() {
+    spinner.style.opacity = '0';
+    await sleep(500);
+    spinner.style.display = 'none';
 
-      setTimeout(() => {
-        overlay.style.opacity = 0;
-        overlay.setAttribute('aria-hidden', 'true');
+    checkmark.style.opacity = '1';
+    checkmark.style.animation = 'bounceIn 0.8s forwards';
 
-        setTimeout(() => {
-          overlay.style.display = 'none';
-          content.style.opacity = 1;
-          content.removeAttribute('aria-hidden');
-          document.body.style.overflow = 'auto';
-        }, 1000);
-      }, 2500);
-    })();
-  </script>
+    checkmarkPath.style.transition = 'none';
+    checkmarkPath.style.strokeDashoffset = 100;
+    checkmarkPath.getBoundingClientRect(); // reflow
+    checkmarkPath.style.transition = 'stroke-dashoffset 0.8s ease';
+    checkmarkPath.style.strokeDashoffset = 0;
+
+    await sleep(900);
+
+    thankyou.setAttribute('aria-hidden', 'false');
+    thankyou.classList.add('show');
+
+    container.setAttribute('aria-busy', 'false');
+  }
+
+  async function run() {
+    await sleep(3500);
+    await showCheckmark();
+  }
+
+  run();
+</script>
+
 </body>
 </html>
