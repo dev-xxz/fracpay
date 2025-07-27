@@ -5,162 +5,269 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Thank You</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
 
     /* Reset */
     body, html {
       margin: 0; padding: 0; height: 100%;
-      background: black;
-      color: #0f0;
-      font-family: 'Share Tech Mono', monospace;
+      background: #1a001a;
+      color: #ff66cc;
+      font-family: 'Orbitron', sans-serif;
       overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      flex-direction: column;
     }
 
-    /* Matrix Canvas */
-    #matrix {
+    /* Container hidden initially */
+    #content {
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      max-width: 480px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 20;
+    }
+
+    /* Glitch effect for heading */
+    .glitch {
+      position: relative;
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #ff66cc;
+      letter-spacing: 2px;
+      animation: glitch-anim 2s infinite;
+    }
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      opacity: 0.8;
+      clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    }
+    .glitch::before {
+      left: 2px;
+      text-shadow: -2px 0 #ff0099;
+      animation: glitch-anim-before 2s infinite;
+    }
+    .glitch::after {
+      left: -2px;
+      text-shadow: -2px 0 #ff66cc;
+      animation: glitch-anim-after 2s infinite;
+      clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+    }
+
+    @keyframes glitch-anim {
+      0%, 100% {transform: translate(0);}
+      20% {transform: translate(-2px, 2px);}
+      40% {transform: translate(2px, -2px);}
+      60% {transform: translate(-2px, -2px);}
+      80% {transform: translate(2px, 2px);}
+    }
+    @keyframes glitch-anim-before {
+      0%, 100% {clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);}
+      50% {clip-path: polygon(0 10%, 100% 10%, 100% 30%, 0 30%);}
+    }
+    @keyframes glitch-anim-after {
+      0%, 100% {clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);}
+      50% {clip-path: polygon(0 65%, 100% 65%, 100% 85%, 0 85%);}
+    }
+
+    /* Scanline overlay */
+    .scanlines {
+      pointer-events: none;
       position: fixed;
       top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.15;
+      width: 100%; height: 100%;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          rgba(255, 102, 204, 0.04),
+          rgba(255, 102, 204, 0.04) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+      z-index: 10;
+      animation: scanline-move 10s linear infinite;
+    }
+    @keyframes scanline-move {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 100%; }
     }
 
     .container {
       position: relative;
-      z-index: 1;
+      z-index: 20;
       max-width: 480px;
-      background: rgba(0, 0, 0, 0.85);
-      border: 2px solid #00ff00;
+      background: #330033cc;
+      border: 2px solid #ff33cc;
       padding: 40px 30px;
       border-radius: 12px;
       box-shadow:
-        0 0 10px #00ff00,
-        0 0 20px #00ff00,
-        0 0 40px #00ff00,
-        0 0 80px #00ff00;
-    }
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      color: #00ff00;
-      animation: flicker 2s infinite alternate;
-      text-shadow:
-        0 0 10px #00ff00,
-        0 0 20px #00ff00,
-        0 0 40px #00ff00;
+        0 0 15px #ff33cc,
+        0 0 30px #ff33ccaa;
+      margin: 0 auto;
     }
 
     p {
       font-size: 1.1rem;
       margin-bottom: 30px;
       line-height: 1.5;
-      color: #0f0;
-      text-shadow: 0 0 5px #0f0;
+      color: #ff99dd;
+      text-shadow: 0 0 6px #ff66cc;
     }
 
     .btn {
       display: inline-block;
       padding: 14px 28px;
       font-size: 1rem;
-      font-weight: 600;
-      color: black;
-      background-color: #0f0;
+      font-weight: 700;
+      color: #330033;
+      background-color: #ff66cc;
       border: none;
       border-radius: 8px;
       text-decoration: none;
       cursor: pointer;
-      box-shadow: 0 0 10px #0f0;
+      box-shadow: 0 0 15px #ff66cc;
       transition: background-color 0.3s ease;
     }
     .btn:hover {
-      background-color: #0c0;
-      box-shadow: 0 0 20px #0c0;
+      background-color: #ff33cc;
+      box-shadow: 0 0 30px #ff33cc;
     }
 
     footer {
       margin-top: 40px;
       font-size: 0.85rem;
-      color: #004d00;
+      color: #990066cc;
       text-shadow: none;
+      position: relative;
+      z-index: 20;
     }
 
-    /* Flicker Animation */
-    @keyframes flicker {
-      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    /* Confirmation overlay */
+    #confirm-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: #000000cc;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      color: #00ff66;
+      text-shadow:
+        0 0 10px #00ff66,
+        0 0 30px #00ff66,
+        0 0 60px #00ff66;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      animation: pulseGlow 2.5s ease-in-out forwards;
+    }
+
+    /* Checkmark */
+    #confirm-overlay svg {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 20px;
+      stroke: #00ff66;
+      stroke-width: 5;
+      fill: none;
+      filter:
+        drop-shadow(0 0 8px #00ff66)
+        drop-shadow(0 0 15px #00ff66);
+      animation: pulseGlow 2.5s ease-in-out forwards;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% {
+        filter:
+          drop-shadow(0 0 8px #00ff66)
+          drop-shadow(0 0 15px #00ff66);
         opacity: 1;
-        text-shadow:
-          0 0 10px #00ff00,
-          0 0 20px #00ff00,
-          0 0 40px #00ff00;
+        transform: scale(1);
       }
-      20%, 22%, 24%, 55% {
-        opacity: 0.4;
-        text-shadow: none;
+      50% {
+        filter:
+          drop-shadow(0 0 15px #00ff66)
+          drop-shadow(0 0 30px #00ff66);
+        opacity: 1;
+        transform: scale(1.1);
       }
     }
   </style>
 </head>
 <body>
-  <canvas id="matrix"></canvas>
-
-  <div class="container">
-    <h1>Thank You for Your Purchase!</h1>
-    <p>Your order with FRACTURE has been successfully processed.</p>
-    <p>Please check your email for your product files and additional information.</p>
-    <a href="https://store.fracturesoftware.com" class="btn">Browse More Products</a>
+  <div id="confirm-overlay" aria-live="polite" aria-label="Purchase Confirmed">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+    Confirmed
   </div>
+
+  <div class="scanlines"></div>
+
+  <div id="content" class="container" role="main" aria-label="Thank You Content">
+    <h1 class="glitch" data-text="Thank You for Your Purchase!">Thank You for Your Purchase!</h1>
+    <p>Your order with FRACTURE has been successfully processed.</p>
+    <p>Please check your email for download instructions and support information.</p>
+    <a href="/products" class="btn">Browse More Products</a>
+  </div>
+
   <footer>
     &copy; 2025 FRACTURE — Premium Cheat Software
   </footer>
 
   <script>
-    // MATRIX CODE RAIN EFFECT
-    const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
+    (function() {
+      // Allowed referrer domains - note no trailing slashes
+      const allowedDomains = [
+        'https://fracture.sellhub.cx',
+        'https://store.fracturesoftware.site',
+        'https://sellhub.cx'
+      ];
 
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
-
-    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()-_=+[]{}|;:,.<>?/\\";
-    const fontSize = 16;
-    const columns = Math.floor(width / fontSize);
-
-    // An array of y positions for each column
-    const drops = Array(columns).fill(0);
-
-    function draw() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-      ctx.fillRect(0, 0, width, height);
-
-      ctx.fillStyle = "#0f0";
-      ctx.font = fontSize + "px 'Share Tech Mono', monospace";
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > height && Math.random() > 0.975) {
-          drops[i] = 0;
+      // Get the referrer hostname with protocol
+      function getReferrerDomain() {
+        try {
+          const url = new URL(document.referrer);
+          return url.protocol + '//' + url.hostname;
+        } catch {
+          return null; // no referrer or invalid
         }
-        drops[i]++;
       }
-    }
 
-    setInterval(draw, 50);
+      const refDomain = getReferrerDomain();
 
-    // Resize canvas on window resize
-    window.addEventListener('resize', () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    });
+      if (!refDomain || !allowedDomains.includes(refDomain)) {
+        // Not allowed — redirect immediately
+        window.location.href = 'https://fracture.sellhub.cx'; // Change this to your main page
+        return;
+      }
+
+      // Show confirmation animation, then fade in main content
+      const overlay = document.getElementById('confirm-overlay');
+      const content = document.getElementById('content');
+
+      // After 2.5 seconds, fade out overlay and show content
+      setTimeout(() => {
+        overlay.style.transition = 'opacity 1s ease';
+        overlay.style.opacity = 0;
+
+        // Show content after overlay fades
+        setTimeout(() => {
+          overlay.style.display = 'none';
+          content.style.opacity = 1;
+          document.body.style.overflow = 'auto'; // Allow scrolling if needed
+        }, 1000);
+      }, 2500);
+    })();
   </script>
 </body>
 </html>
