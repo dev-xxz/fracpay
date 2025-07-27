@@ -161,22 +161,6 @@
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
     });
-    <script>
-  // List of allowed referring URLs
-  const allowedReferrers = [
-    'https://fracture.sellhub.cx',
-    'https://store.fracturesoftware.site',
-    'https://sellhub.cx'
-  ];
-
-  // Check if referrer starts with any allowed referrer
-  const isAllowed = allowedReferrers.some(ref => document.referrer.startsWith(ref));
-
-  if (!isAllowed) {
-    // Redirect if referrer is not allowed or empty
-    window.location.href = 'https://store.fracturesoftware.site'; // Redirect to homepage or any other page
-  }
-</script>
   </script>
 </body>
 </html>
