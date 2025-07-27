@@ -224,50 +224,6 @@
     &copy; 2025 FRACTURE — Premium Cheat Software
   </footer>
 
-  <script>
-    (function() {
-      // Allowed referrer domains - note no trailing slashes
-      const allowedDomains = [
-        'https://fracture.sellhub.cx',
-        'https://store.fracturesoftware.site',
-        'https://sellhub.cx'
-      ];
 
-      // Get the referrer hostname with protocol
-      function getReferrerDomain() {
-        try {
-          const url = new URL(document.referrer);
-          return url.protocol + '//' + url.hostname;
-        } catch {
-          return null; // no referrer or invalid
-        }
-      }
-
-      const refDomain = getReferrerDomain();
-
-      if (!refDomain || !allowedDomains.includes(refDomain)) {
-        // Not allowed — redirect immediately
-        window.location.href = 'https://fracture.sellhub.cx'; // Change this to your main page
-        return;
-      }
-
-      // Show confirmation animation, then fade in main content
-      const overlay = document.getElementById('confirm-overlay');
-      const content = document.getElementById('content');
-
-      // After 2.5 seconds, fade out overlay and show content
-      setTimeout(() => {
-        overlay.style.transition = 'opacity 1s ease';
-        overlay.style.opacity = 0;
-
-        // Show content after overlay fades
-        setTimeout(() => {
-          overlay.style.display = 'none';
-          content.style.opacity = 1;
-          document.body.style.overflow = 'auto'; // Allow scrolling if needed
-        }, 1000);
-      }, 2500);
-    })();
-  </script>
 </body>
 </html>
