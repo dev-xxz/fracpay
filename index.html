@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Thank You</title>
+  <title>Thank You - FRACTURE</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
 
-    /* Reset */
     body, html {
       margin: 0; padding: 0; height: 100%;
       background: #1a001a;
@@ -16,7 +15,6 @@
       overflow: hidden;
     }
 
-    /* Container hidden initially */
     #content {
       opacity: 0;
       transition: opacity 1s ease-in-out;
@@ -32,7 +30,6 @@
       z-index: 20;
     }
 
-    /* Glitch effect for heading */
     .glitch {
       position: relative;
       font-size: 3rem;
@@ -78,7 +75,6 @@
       50% {clip-path: polygon(0 65%, 100% 65%, 100% 85%, 0 85%);}
     }
 
-    /* Scanline overlay */
     .scanlines {
       pointer-events: none;
       position: fixed;
@@ -150,7 +146,6 @@
       z-index: 20;
     }
 
-    /* Confirmation overlay */
     #confirm-overlay {
       position: fixed;
       top: 0; left: 0;
@@ -169,9 +164,10 @@
       font-family: 'Orbitron', sans-serif;
       font-size: 3rem;
       animation: pulseGlow 2.5s ease-in-out forwards;
+      opacity: 1;
+      transition: opacity 1s ease;
     }
 
-    /* Checkmark */
     #confirm-overlay svg {
       width: 100px;
       height: 100px;
@@ -213,17 +209,36 @@
 
   <div class="scanlines"></div>
 
-  <div id="content" class="container" role="main" aria-label="Thank You Content">
+  <div id="content" class="container" role="main" aria-label="Thank You Content" aria-hidden="true">
     <h1 class="glitch" data-text="Thank You for Your Purchase!">Thank You for Your Purchase!</h1>
     <p>Your order with FRACTURE has been successfully processed.</p>
     <p>Please check your email for download instructions and support information.</p>
     <a href="/products" class="btn">Browse More Products</a>
   </div>
 
-  <footer>
+  <footer aria-hidden="true">
     &copy; 2025 FRACTURE — Premium Cheat Software
   </footer>
 
+  <script>
+    (function() {
+      const overlay = document.getElementById('confirm-overlay');
+      const content = document.getElementById('content');
 
+      content.setAttribute('aria-hidden', 'true');
+
+      setTimeout(() => {
+        overlay.style.opacity = 0;
+        overlay.setAttribute('aria-hidden', 'true');
+
+        setTimeout(() => {
+          overlay.style.display = 'none';
+          content.style.opacity = 1;
+          content.removeAttribute('aria-hidden');
+          document.body.style.overflow = 'auto';
+        }, 1000);
+      }, 2500);
+    })();
+  </script>
 </body>
 </html>
